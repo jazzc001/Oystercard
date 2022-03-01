@@ -30,19 +30,19 @@ describe OysterCard do
 
   it 'tests touch out functionality is correct' do
     subject.top_up(20)
-    subject.touch_in
-    subject.touch_out
+    subject.touch_in("test")
+    subject.touch_out("test")
     expect(subject.in_journey).to eq nil
   end
 
   it 'tests error is card has less than minimum fare' do
-    expect{subject.touch_in}.to raise_error
+    expect{subject.touch_in("test")}.to raise_error
   end
 
   it 'tests touch out deducts minimum fare' do
     subject.top_up(50)
-    subject.touch_in
-    expect {subject.touch_out}.to change{ subject.balance}.by(-subject.MINIMUM_FARE)
+    subject.touch_in("test")
+    expect {subject.touch_out("test")}.to change{ subject.balance}.by(-subject.MINIMUM_FARE)
   end
 
   it 'saves the entry station on touch in' do
@@ -51,6 +51,15 @@ describe OysterCard do
     expect(fakecard.in_journey).to eq "test"
   end
 
-  
+  it "tests that journeys should be empty initially" do
+    expect(subject.journeys).to eq []
+  end
+
+  it "tests that one journey is added after touch in and out" do
+    subject.top_up(50)
+    subject.touch_in("test entry")
+    subject.touch_out("test exit")
+    expect(subject.journeys).to eq ["test entry" => "test exit"]
+  end
 end
 
