@@ -1,4 +1,5 @@
 require_relative 'journey'
+require_relative 'journeylog'
 MAX_MONEY = 10
 class OysterCard
   attr_reader :balance, :MINIMUM_FARE, :entry_station
@@ -6,8 +7,7 @@ class OysterCard
     @balance = balance
     @MAX_MONEY = 90
     @MINIMUM_FARE = 1
-    @journeys = []
-    @current_journey = nil
+    @journeylog
   end
 
   def touch_in(entry_station)
@@ -23,18 +23,6 @@ class OysterCard
     save_journey
     #reset the entry to nil
     @current_journey = nil
-  end
-
-  def journeys
-    return_array = []
-    @journeys.each do |journey|
-      return_array << journey.show_journey
-    end
-    return return_array
-  end
-
-  def in_journey
-    return @current_journey ? true : false
   end
 
   def top_up(money)
@@ -58,9 +46,6 @@ class OysterCard
     @balance -= money
   end
 
-  def save_journey
-    @journeys << @current_journey
-  end
 end
 
 # oyster_card = OysterCard.new
