@@ -1,6 +1,9 @@
 require 'oyster_card'
+
+
+
 describe OysterCard do
-  let double(:station) {"Southwark"}
+  # let(:fakecard) { fakecard = double(:fakecard)}
   it 'checks default balance is 0' do
     expect(subject.balance).to eq 0
   end
@@ -21,15 +24,15 @@ describe OysterCard do
 
   it 'tests touch in functionality is correct' do
     subject.top_up(20)
-    subject.touch_in
-    expect(subject.in_journey?).to eq true
+    subject.touch_in("test")
+    expect(subject.in_journey).to eq "test"
   end
 
   it 'tests touch out functionality is correct' do
     subject.top_up(20)
     subject.touch_in
     subject.touch_out
-    expect(subject.in_journey?).to eq false
+    expect(subject.in_journey).to eq nil
   end
 
   it 'tests error is card has less than minimum fare' do
@@ -43,8 +46,11 @@ describe OysterCard do
   end
 
   it 'saves the entry station on touch in' do
-    subject.top_up(10)
-    subject.touch_in
-    expect(subject.entry_station(station)).to eq "Southwark"
+    fakecard = double(:fakecard)
+    allow(fakecard).to receive(:in_journey).and_return("test")
+    expect(fakecard.in_journey).to eq "test"
   end
+
+  
 end
+

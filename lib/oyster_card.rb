@@ -6,10 +6,10 @@ class OysterCard
     @MAX_MONEY = 90
     @in_journey = false
     @MINIMUM_FARE = 1
-    @entry_station = ""
+    @entry_station = nil
   end
 
-  def touch_in(station="")
+  def touch_in(station=nil)
     balance_over_minimum?
     @entry_station = station
     @in_journey = true
@@ -17,11 +17,11 @@ class OysterCard
 
   def touch_out
     deduct(@MINIMUM_FARE)
-    @in_journey = false
+    @entry_station = nil
   end
 
-  def in_journey?
-    return @in_journey
+  def in_journey
+    return @entry_station
   end
 
   def top_up(money)
