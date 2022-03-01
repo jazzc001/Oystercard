@@ -24,15 +24,15 @@ describe OysterCard do
 
   it 'tests touch in functionality is correct' do
     subject.top_up(20)
-    subject.touch_in("test")
-    expect(subject.in_journey).to eq "test"
+    subject.touch_in(true)
+    expect(subject.in_journey).to eq true
   end
 
   it 'tests touch out functionality is correct' do
     subject.top_up(20)
     subject.touch_in("test")
     subject.touch_out("test")
-    expect(subject.in_journey).to eq nil
+    expect(subject.in_journey).to eq false
   end
 
   it 'tests error is card has less than minimum fare' do
@@ -59,7 +59,7 @@ describe OysterCard do
     subject.top_up(50)
     subject.touch_in("test entry")
     subject.touch_out("test exit")
-    expect(subject.journeys).to eq ["test entry" => "test exit"]
+    expect(subject.journeys).to eq(["Entry station is test entry. Exit station is test exit"])
   end
 end
 
